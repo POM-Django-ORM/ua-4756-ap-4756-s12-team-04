@@ -134,6 +134,17 @@ class Author(models.Model):
         type patronymic: str max_length=20
         :return: None
         """
+        if name is not None:
+            self.name = name
+
+        if surname is not None:
+            self.surname = surname
+
+        if patronymic is not None:
+            self.patronymic = patronymic
+
+        self.save()
+
 
     @staticmethod
     def get_all():
