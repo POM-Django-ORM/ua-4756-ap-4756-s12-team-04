@@ -79,6 +79,7 @@ class CustomUser(AbstractBaseUser):
         This magic method is redefined to show class and id of CustomUser object.
         :return: class, id
         """
+        return f"{self.__class__.__name__}(id={self.id})"
 
     @staticmethod
     def get_by_id(user_id):
