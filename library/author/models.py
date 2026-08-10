@@ -12,8 +12,11 @@ class Author(models.Model):
         type surname: str max_length=20
         param patronymic: Describes middle name of the author
         type patronymic: str max_length=20
-
     """
+    name = models.CharField(max_length=20, help_text="Example: John")
+    surname = models.CharField(max_length=20, help_text="Example: Smith")
+    patronymic = models.CharField(max_length=20, null=True, blank=True, help_text="Example: Edward")
+
 
     def __str__(self):
         """
