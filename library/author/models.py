@@ -36,6 +36,7 @@ class Author(models.Model):
         This magic method is redefined to show class and id of Author object.
         :return: class, id
         """
+        return f"{self.__class__.__name__}(id={self.id})"
 
     @staticmethod
     def get_by_id(author_id):
