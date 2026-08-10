@@ -204,3 +204,4 @@ class CustomUser(AbstractBaseUser):
         """
         returns str role name
         """
+        return dict(ROLE_CHOICES)[self.role]
