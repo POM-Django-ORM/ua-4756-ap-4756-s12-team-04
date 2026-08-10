@@ -116,6 +116,13 @@ class CustomUser(AbstractBaseUser):
         :type user_id: int
         :return: True if object existed in the db and was removed or False if it didn't exist
         """
+        user = CustomUser.get_by_id(user_id)
+
+        if user:
+            user.delete()
+            return True
+        else:
+            return False
 
     @staticmethod
     def create(email, password, first_name=None, middle_name=None, last_name=None):
