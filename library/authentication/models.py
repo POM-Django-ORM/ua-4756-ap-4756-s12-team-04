@@ -102,6 +102,12 @@ class CustomUser(AbstractBaseUser):
         :type email: str
         :return: user object or None if a user with such ID does not exist
         """
+        try:
+            user = CustomUser.objects.get(email=email)
+        except CustomUser.DoesNotExist:
+            return None
+        else:
+            return user
 
     @staticmethod
     def delete_by_id(user_id):
