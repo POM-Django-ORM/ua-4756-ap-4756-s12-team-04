@@ -225,6 +225,25 @@ class CustomUser(AbstractBaseUser):
         :type is_active: bool
         :return: None
         """
+        if first_name is not None:
+            self.first_name = first_name
+
+        if last_name is not None:
+            self.last_name = last_name
+
+        if middle_name is not None:
+            self.middle_name = middle_name
+
+        if password is not None:
+            self.set_password(password)
+
+        if role is not None:
+            self.role = role
+
+        if is_active is not None:
+            self.is_active = is_active
+
+        self.save()
 
     @staticmethod
     def get_all():
