@@ -198,6 +198,7 @@ class CustomUser(AbstractBaseUser):
         """
         returns data for json request with QuerySet of all users
         """
+        return list(CustomUser.objects.all())
 
     def get_role_name(self):
         """
