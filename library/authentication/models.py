@@ -1,5 +1,7 @@
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.db import models
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 
 
 ROLE_CHOICES = (
@@ -139,6 +141,37 @@ class CustomUser(AbstractBaseUser):
         :type password: str
         :return: a new user object which is also written into the DB
         """
+        try:
+            validate_email(email)
+        except ValidationError:
+             return None
+
+        if CustomUser.objects.filter(email=email).exists():
+            return None
+
+        if first_name is not None and len(first_name) > 20:
+            return None
+
+        if last_name is not None and len(last_name) > 20:
+            return None
+
+        if middle_name is not None and len(middle_name) > 20:
+            return None
+
+        try:
+            new_user = CustomUser.objects.create(
+                email = email,
+                first_name = first_name,
+                last_name = last_name,
+                middle_name = middle_name
+            )
+        except Exception:
+            return None
+        else:
+            new_user.set_password(password)
+            new_user.save()
+            return new_user
+
 
     def to_dict(self):
         """
