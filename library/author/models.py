@@ -58,6 +58,13 @@ class Author(models.Model):
         :type author_id: int
         :return: True if object existed in the db and was removed or False if it didn't exist
         """
+        author = Author.get_by_id(author_id)
+
+        if author:
+            author.delete()
+            return True
+        else:
+            return False
 
     @staticmethod
     def create(name, surname, patronymic):
