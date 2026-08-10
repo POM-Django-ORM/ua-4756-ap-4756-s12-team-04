@@ -1,4 +1,6 @@
 from django.contrib.auth.base_user import AbstractBaseUser
+from django.db import models
+
 
 ROLE_CHOICES = (
     (0, 'visitor'),
@@ -31,6 +33,26 @@ class CustomUser(AbstractBaseUser):
         type updated_at: bool
 
     """
+    first_name = models.CharField(max_length=20, null=True, blank=True, help_text="Example: John")
+    last_name = models.CharField(max_length=20, null=True, blank=True, help_text="Example: David")
+    middle_name = models.CharField(max_length=20, null=True, blank=True, help_text="Example: Smith")
+
+    email = models.EmailField(max_length=180, unique=True, help_text="Example: example@gmail.com")
+    # The field <password> is inhered from AbstractUser
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    role = models.IntegerField(choices=ROLE_CHOICES, default=0, help_text="Select type of user")
+
+    # The field <is_active> is inhered from AbstractUser, 
+    # but we change it from True to False
+    is_active = models.BooleanField(default=False)
+
+    USERNAME_FIELD = "email"
+
+    class Meta:
+        ordering = ["created_at"]
 
     def __str__(self):
         """
