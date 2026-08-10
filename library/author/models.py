@@ -89,6 +89,12 @@ class Author(models.Model):
         |   'patronymic': 'ln',
         | }
         """
+        return {
+            'id': self.id,
+            'name': self.name,
+            'surname': self.surname,
+            'patronymic': self.patronymic,
+            }
 
     def update(self,
                name=None,
