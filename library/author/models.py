@@ -44,6 +44,12 @@ class Author(models.Model):
         :param author_id: SERIAL: the id of a Author to be found in the DB
         :return: author object or None if a user with such ID does not exist
         """
+        try:
+            author = Author.objects.get(id=author_id)
+        except Author.DoesNotExist:
+            return None
+        else:
+            return author
 
     @staticmethod
     def delete_by_id(author_id):
