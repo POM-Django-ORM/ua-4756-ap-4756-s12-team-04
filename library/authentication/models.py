@@ -157,6 +157,17 @@ class CustomUser(AbstractBaseUser):
         |   'is_active:' True
         | }
         """
+        return {
+            'id': self.id,
+            'first_name': self.first_name,
+            'middle_name': self.middle_name,
+            'last_name': self.last_name,
+            'email': self.email,
+            'created_at': int(self.created_at.timestamp()),
+            'updated_at': int(self.updated_at.timestamp()),
+            'role': self.role,
+            'is_active': self.is_active,
+        }
 
     def update(self,
                first_name=None,
