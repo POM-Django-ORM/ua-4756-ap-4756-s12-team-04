@@ -77,6 +77,30 @@ class Author(models.Model):
         type patronymic: str max_length=20
         :return: a new author object which is also written into the DB
         """
+        if Author.objects.filter(name=name).exists():
+            return None
+
+        if name is not None and len(name) > 20:
+            return None
+
+        if surname is not None and len(surname) > 20:
+            return None
+
+        if patronymic is not None and len(patronymic) > 20:
+            return None
+
+        try:
+            new_author = Author.objects.create(
+                name = name,
+                surname = surname,
+                patronymic = patronymic
+            )
+        except Exception:
+            return None
+        else:
+            new_author.save()
+            return new_author
+
 
     def to_dict(self):
         """
