@@ -128,7 +128,19 @@ class Book(models.Model):
         type count: int default=10
         :return: None
         """
+        if (name and len(name) > 128):
+            return None
         
+        if name:
+            self.name = name
+
+        if description:
+            self.description = description
+
+        if count:
+            self.count = count
+
+        self.save
 
     def add_authors(self, authors):
         """
