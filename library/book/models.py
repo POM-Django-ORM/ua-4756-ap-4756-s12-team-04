@@ -62,6 +62,13 @@ class Book(models.Model):
         :type book_id: int
         :return: True if object existed in the db and was removed or False if it didn't exist
         """
+        book = Book.get_by_id(book_id)
+
+        if book:
+            book.delete()
+            return True
+        else:
+            return False
 
     @staticmethod
     def create(name, description, count=10, authors=None):
