@@ -24,10 +24,10 @@ class Author(models.Model):
         :return: author id, author name, author surname, author patronymic
         """
         data = {
-            "id": {self.id},
-            "name":{self.name},
-            "surname":{self.surname},
-            "patronymic":{self.patronymic}
+            "id": self.id,
+            "name":self.name,
+            "surname":self.surname,
+            "patronymic":self.patronymic
         }
         return ", ".join(f"'{key}': '{value}'" if isinstance(value, str) else f"'{key}': {value}" for key, value in data.items())
 
@@ -77,8 +77,6 @@ class Author(models.Model):
         type patronymic: str max_length=20
         :return: a new author object which is also written into the DB
         """
-        if Author.objects.filter(name=name).exists():
-            return None
 
         if name is not None and len(name) > 20:
             return None
@@ -134,15 +132,14 @@ class Author(models.Model):
         type patronymic: str max_length=20
         :return: None
         """
-        if name is not None:
-            self.name = name
+        if (name and len(name) > 20) or \
+           (surname and len(surname) > 20) or \
+           (patronymic and len(patronymic) > 20):
+            return None
 
-        if surname is not None:
-            self.surname = surname
-
-        if patronymic is not None:
-            self.patronymic = patronymic
-
+        self.name = name if name else self.name
+        self.surname = surname if surname else self.surname
+        self.patronymic = patronymic if patronymic else self.patronymic
         self.save()
 
 
