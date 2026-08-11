@@ -96,6 +96,13 @@ class Book(models.Model):
         |   'authors': []
         | }
         """
+        return {
+            'id': self.id,
+            'name': self.name,
+            'description': self.description,
+            'count': self.count,
+            'authors': [author.id for author in self.authors.all()]
+            }
 
     def update(self, name=None, description=None, count=None):
         """
