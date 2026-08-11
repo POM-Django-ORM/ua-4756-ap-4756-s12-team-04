@@ -40,6 +40,7 @@ class Book(models.Model):
         This magic method is redefined to show class and id of Book object.
         :return: class, id
         """
+        return f"{self.__class__.__name__}(id={self.id})"
 
     @staticmethod
     def get_by_id(book_id):
