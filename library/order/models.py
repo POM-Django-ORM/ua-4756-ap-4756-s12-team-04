@@ -17,6 +17,15 @@ class Order(models.Model):
         Magic method is redefined to show all information about Order.
         :return: book id, book name, book description, book count, book authors
         """
+        data = {
+            "id":self.id,
+            "user":self.user,
+            "book":self.book,
+            "created_at": str(self.created_at) if self.created_at else None,
+            "end_at":str(self.end_at) if self.end_at else None,
+            "plated_end_at":str(self.plated_end_at) if self.plated_end_at else None
+        }
+        return ", ".join(f"'{key}': {repr(value)}" if key in ("user", "book") else f"'{key}': '{value}'" if isinstance(value,str) else f"'{key}': {value}" for key, value in data.items())
 
     def __repr__(self):
         """
