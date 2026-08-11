@@ -1,7 +1,16 @@
 from django.db import models
+from authentication.models import CustomUser
+from book.models import Book
 
 
 class Order(models.Model):
+
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    end_at = models.DateTimeField(null=True, blank=True)
+    plated_end_at = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         """
