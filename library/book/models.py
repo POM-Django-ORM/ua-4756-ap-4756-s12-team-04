@@ -115,6 +115,10 @@ class Book(models.Model):
         param authors: list authors
         :return: None
         """
+        if authors:
+            self.authors.add(*authors)
+        
+        return None
 
     def remove_authors(self, authors):
         """
