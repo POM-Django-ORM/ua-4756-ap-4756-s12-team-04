@@ -16,7 +16,7 @@ class Book(models.Model):
         param authors: list of Authors
         type authors: list->Author
     """
-    name = models.CharField(max_length=20, help_text="Example: Book of books")
+    name = models.CharField(max_length=128, help_text="Example: Book of books")
     description = models.TextField(help_text="Example: About a book")
     count = models.IntegerField(default=10, help_text="Example: Amount of books")
     authors = models.ManyToManyField(Author, related_name="books")
@@ -27,11 +27,11 @@ class Book(models.Model):
         :return: book id, book name, book description, book count, book authors
         """
         data = {
-            "id": {self.id},
-            "name":{self.name},
-            "description":{self.description},
-            "count":{self.count},
-            "authors":{self.authors}
+            "id": self.id,
+            "name":self.name,
+            "description":self.description,
+            "count":self.count,
+            "authors":[author.id for author in self.authors.all()]
         }
         return ", ".join(f"'{key}': '{value}'" if isinstance(value, str) else f"'{key}': {value}" for key, value in data.items())
 
@@ -62,13 +62,13 @@ class Book(models.Model):
         :type book_id: int
         :return: True if object existed in the db and was removed or False if it didn't exist
         """
-        book = Book.get_by_id(book_id)
-
-        if book:
+        try:
+            book = Book.objects.get(id=book_id)
+        except Book.DoesNotExist:
+            return False
+        else:
             book.delete()
             return True
-        else:
-            return False
 
     @staticmethod
     def create(name, description, count=10, authors=None):
@@ -88,6 +88,7 @@ class Book(models.Model):
 
         try:
             new_book = Book(name=name, description=description, count=count)
+            new_book.save()
 
             if authors:
                 new_book.authors.add(*authors)
@@ -95,7 +96,8 @@ class Book(models.Model):
         except Exception:
             return None
         else:
-            new_book.save()
+            return new_book
+
 
     def to_dict(self):
         """
@@ -140,7 +142,7 @@ class Book(models.Model):
         if count:
             self.count = count
 
-        self.save
+        self.save()
 
     def add_authors(self, authors):
         """
