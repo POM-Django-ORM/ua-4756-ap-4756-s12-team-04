@@ -83,6 +83,19 @@ class Book(models.Model):
         type authors: list->Author
         :return: a new book object which is also written into the DB
         """
+        if len(name) > 128:
+            return None
+
+        try:
+            new_book = Book(name=name, description=description, count=count)
+
+            if authors:
+                new_book.authors.add(*authors)
+            
+        except Exception:
+            return None
+        else:
+            new_book.save()
 
     def to_dict(self):
         """
@@ -115,6 +128,7 @@ class Book(models.Model):
         type count: int default=10
         :return: None
         """
+        
 
     def add_authors(self, authors):
         """
