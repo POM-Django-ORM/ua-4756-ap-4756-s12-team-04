@@ -136,3 +136,4 @@ class Book(models.Model):
         """
         returns data for json request with QuerySet of all books
         """
+        return list(Book.objects.all())
