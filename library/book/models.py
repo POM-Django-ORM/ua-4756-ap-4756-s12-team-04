@@ -126,6 +126,10 @@ class Book(models.Model):
         param authors: list authors
         :return: None
         """
+        if authors:
+            self.authors.remove(*authors)
+        
+        return None
 
     @staticmethod
     def get_all():
