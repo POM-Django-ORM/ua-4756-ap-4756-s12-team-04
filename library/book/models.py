@@ -26,6 +26,14 @@ class Book(models.Model):
         Magic method is redefined to show all information about Book.
         :return: book id, book name, book description, book count, book authors
         """
+        data = {
+            "id": {self.id},
+            "name":{self.name},
+            "description":{self.description},
+            "count":{self.count},
+            "authors":{self.authors}
+        }
+        return ", ".join(f"'{key}': '{value}'" if isinstance(value, str) else f"'{key}': {value}" for key, value in data.items())
 
     def __repr__(self):
         """
