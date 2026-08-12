@@ -108,7 +108,13 @@ class Order(models.Model):
         :type plated_end_at: int (timestamp)
         :return: None
         """
-        pass
+        if plated_end_at:
+            self.plated_end_at = plated_end_at
+
+        if end_at:
+            self.end_at = end_at
+
+        self.save()
 
     @staticmethod
     def get_all():
