@@ -102,7 +102,7 @@ class Order(models.Model):
         """
         :return:  all orders that do not have a return date (end_at)
         """
-        pass
+        return list(Order.objects.filter(end_at=None))
 
     @staticmethod
     def delete_by_id(order_id):
