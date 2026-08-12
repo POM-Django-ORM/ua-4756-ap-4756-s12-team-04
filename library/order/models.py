@@ -111,4 +111,10 @@ class Order(models.Model):
         :type order_id: int
         :return: True if object existed in the db and was removed or False if it didn't exist
         """
-        pass
+        try:
+            order = Order.objects.get(id=order_id)
+        except Order.DoesNotExist:
+            return False
+        else:
+            order.delete()
+            return True
