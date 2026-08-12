@@ -72,7 +72,12 @@ class Order(models.Model):
         :type order_id: int
         :return:  the object of the order, according to the specified id or null in case of its absence
         """
-        pass
+        try:
+            order = Order.objects.get(id=order_id)
+        except Order.DoesNotExist:
+            return None
+        else:
+            return order
 
     def update(self, plated_end_at=None, end_at=None):
         """
