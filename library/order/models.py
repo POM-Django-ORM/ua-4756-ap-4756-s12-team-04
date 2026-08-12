@@ -25,7 +25,9 @@ class Order(models.Model):
             "end_at":str(self.end_at) if self.end_at else None,
             "plated_end_at":str(self.plated_end_at) if self.plated_end_at else None
         }
-        return ", ".join(f"'{key}': {repr(value)}" if key in ("user", "book") else f"'{key}': '{value}'" if isinstance(value,str) else f"'{key}': {value}" for key, value in data.items())
+        return ", ".join(f"'{key}': {repr(value)}" if key in ("user", "book") else \
+                        f"'{key}': '{value}'" if isinstance(value,str) else \
+                        f"'{key}': {value}" for key, value in data.items())
 
     def __repr__(self):
         """
