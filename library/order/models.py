@@ -1,6 +1,7 @@
 from django.db import models
 from authentication.models import CustomUser
 from book.models import Book
+from datetime import datetime
 
 
 class Order(models.Model):
@@ -70,7 +71,19 @@ class Order(models.Model):
         :return: a new order object which is also written into the DB
         """
 
-        pass
+        if Order.objects.filter(book=book, end_at=None).count() >= book.count:
+            return None
+
+        if isinstance(plated_end_at, (int, float)):
+            plated_end_at = datetime.datetime.fromtimestamp(plated_end_at, tz=datetime.timezone.utc)
+
+        try:
+            new_order = Order(user=user, book=book, plated_end_at=plated_end_at)
+            new_order.save()
+        except Exception:
+            return None
+        else:
+            return new_order
 
     @staticmethod
     def get_by_id(order_id):
