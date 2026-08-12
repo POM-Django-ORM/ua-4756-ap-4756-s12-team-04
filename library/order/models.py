@@ -95,7 +95,7 @@ class Order(models.Model):
         """
         :return: all orders
         """
-        pass
+        return list(Order.objects.all())
 
     @staticmethod
     def get_not_returned_books():
